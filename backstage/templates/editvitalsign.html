@@ -1,0 +1,80 @@
+{% extends "backstage.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock head %}
+
+{% block title %}生命徵象分數{% endblock title%}
+
+{% block content%}
+
+
+<br/>
+<div class="container-xl">
+  <br/>
+  <form method="post" enctype=multipart/form-data action={{ url_for('manager.editvitalsign') }}>
+    <table class="table table-bordered">
+      <tr>
+        <th>測量時間</th>
+        <td><input class="form-control" type="text" value="{{ data.測量時間 }}" name="seqtime" readonly class="id_input"></td>
+      </tr>
+      <tr>
+        <th>病歷編號</th>
+        <td><input class="form-control" type="text" value="{{ data.病歷編號 }}" name="pid" readonly></td>
+      </tr>
+      <tr>
+        <th>呼吸</th>
+        <td><input class="form-control" type="text" value="{{ data.呼吸 }}" name="rr" required></td>
+      </tr>
+      <tr>
+        <th>收縮</th>
+        <td><input class="form-control" type="text" value="{{ data.收縮 }}" name="bp" required></td>
+      </tr>
+      <tr>
+        <th>血氧</th>
+        <td><input class="form-control" type="text" value="{{ data.血氧 }}" name="spo2" required></td>
+      </tr>
+      <tr>
+        <th>體溫</th>
+        <td><input class="form-control" type="text" value="{{ data.體溫 }}" name="bt" required></td>
+      </tr>
+      <tr>
+        <th>預警分數</th>
+        <td><input class="form-control" type="text" value="{{ data.預警分數 }}" name="score" required></td>
+      </tr>
+      <tr>
+        <th>風險</th>
+        <td>
+          <select class="form-control" name="risk">
+            {% if data.類別 == 'low' %}
+              <option value="high">高</option>
+              <option value="medium">中</option>
+              <option value="low" selected>低</option>
+            {% elif data.類別 == 'medium' %}
+              <option value="high">高</option>
+              <option value="medium" selected>中</option>
+              <option value="low">低</option>
+            {% else %}
+              <option value="high" selected>高</option>
+              <option value="medium">中</option>
+              <option value="low">低</option>
+            {% endif %}
+        </select>
+      </tr>
+        <th>脈搏</th>
+        <td><input class="form-control" type="text" value="{{ data.脈搏 }}" name="pulse" required></td>
+      </tr>
+    </table>
+    <center>
+      <div class="option">
+        <button class="btn btn-outline-success" type="submit">確定修改</button> 
+        <a href="{{ url_for('manager.vitalsignManager') }}"><button class="btn btn-outline-danger">回生命徵象紀錄</button></a>
+      </div>
+    </center>
+
+  </form>
+</div>
+
+
+
+{% endblock content%}

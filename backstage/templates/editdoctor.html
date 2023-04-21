@@ -1,0 +1,38 @@
+{% extends "backstage.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock head %}
+
+{% block title %}醫師資訊維護{% endblock title%}
+
+{% block content%}
+
+
+<br/>
+<div class="container-xl">
+  <br/>
+  <form method="post" enctype=multipart/form-data action={{ url_for('manager.editdoctor') }}>
+    <table class="table table-bordered">
+      <tr>
+        <th>醫師編號</th>
+        <td><input class="form-control" type="text" value="{{ data.醫師編號 }}" name="eid" readonly class="id_input"></td>
+      </tr>
+      <tr>
+        <th>醫師姓名</th>
+        <td><input class="form-control" type="text" value="{{ data.醫師姓名 }}" name="name" required></td>
+      </tr>
+      <tr>
+        <th>主治科別</th>
+        <td><input class="form-control" type="text" value="{{ data.主治科別 }}" name="department" required></td>
+      </tr>
+    </table>
+    <center>
+      <div class="option">
+        <button class="btn btn-outline-success" type="submit">確定修改</button> 
+        <a href="{{ url_for('manager.doctorManager') }}"><button class="btn btn-outline-danger">回醫師資訊維護</button></a>
+      </div>
+    </center>
+  </form>
+</div>
+{% endblock content%}

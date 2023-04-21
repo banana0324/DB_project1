@@ -1,0 +1,68 @@
+{% extends "backstage.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content%}
+
+
+<br/>
+<div class="container-xl">
+  <br/>
+  <form method="post" enctype=multipart/form-data action={{ url_for('manager.edit') }}>
+    <table class="table table-bordered">
+      <tr>
+        <th>病歷編號</th>
+        <td><input class="form-control" type="text" value="{{ data.病歷編號 }}" name="pid" readonly class="id_input"></td>
+      </tr>
+      <tr>
+        <th>患者姓名</th>
+        <td><input class="form-control" type="text" value="{{ data.患者姓名 }}" name="name" required></td>
+      </tr>
+      <tr>
+        <th>性別</th>
+        <td>
+          <select class="form-control" name="category">
+            {% if data.性別 == '女' %}
+              <option value="男">男</option>
+              <option value="女" selected>女</option>
+            {% else %}
+              <option value="男" selected>男</option>
+              <option value="女">女</option>
+            {% endif %}
+            
+        </select>
+      </tr>
+      <tr>
+        <th>出生日期</th>
+        <td><input class="form-control" type="text" value="{{ data.生日 }}" name="price" required></td>
+      </tr>
+      <tr>
+        <th>症狀敘述</th>
+        <td>
+          <textarea class="form-control" name="description">{{ data.症狀 }}</textarea>
+        </td>
+      </tr>
+      <!-- <tr>
+        <th>商品圖片</th>
+        <td>
+          <input type="file" name="file" id="file-uploader" data-target="file-uploader"/>
+        </td>
+      </tr> -->
+    </table>
+    <center>
+      <div class="option">
+        <button class="btn btn-outline-success" type="submit">確定修改</button> 
+        <a href="{{ url_for('manager.productManager') }}"><button class="btn btn-outline-danger">回病患資訊管理</button></a>
+      </div>
+    </center>
+
+  </form>
+</div>
+
+
+
+{% endblock content%}

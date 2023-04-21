@@ -1,0 +1,86 @@
+{% extends "frontstage.html" %}
+{% block head %}
+{{ super() }}
+{% endblock head %}
+
+{% block title %}BookStore{% endblock title%}
+
+{% block content %}
+
+{% set temp = 'img/' + data.商品圖片 %}
+
+<br/>
+<div class="row">
+<div class="card" style="width: 20rem;margin-left:5%">
+  <img src={{ url_for('static', filename = temp  ) }} class="card-img-top">
+  <div class="card-body">
+    <h5 class="card-title">{{ data.患者姓名 }}</h5>
+    <p class="card-text"></p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>疾病種類</b>&nbsp;&nbsp;{{ data.疾病種類 }}</li>
+    <li class="list-group-item"><b>狀態</b>&nbsp;&nbsp;{{ data.狀態 }}</li>
+    <li class="list-group-item"><b>主治醫師</b>&nbsp;&nbsp;{{ data.主治醫師 }}</li>
+    <li class="list-group-item"><b>醫師科別</b>&nbsp;&nbsp;{{ data.醫師科別 }}</li>
+    <li class="list-group-item"><b>床號</b>&nbsp;&nbsp;{{ data.床號 }}</li>
+  </ul>
+  <div class="card-body">
+    <a href="{{ url_for('bookstore.bookstore') }}" class="btn btn-outline-primary">回病患列表</a>
+  </div>
+</div>
+
+
+<div class="col-sm-6">
+  <form method="post" action={{ url_for('bookstore.cart') }}>
+<div class="card" style="margin-top:10%">
+  <h5 class="card-header">病患資訊</h5>
+  <div class="card-body">
+    <p class="card-text">
+      {{data.病歷編號}}
+    </p>
+    <p class="card-text">
+      {{data.患者姓名}}
+    </p>
+    <p class="card-text">
+      {{data.性別}}
+    </p>
+    <p class="card-text">
+      生日:{{data.生日}}
+    </p>
+    <p class="card-text">
+      住院時間：{{data.住院開始日期}}~{{data.住院結束日期}}
+    </p>
+    <p class="card-text">
+      測量時機：{{data.測量時間}}
+    </p>
+        <p class="card-text">
+      呼吸：{{data.呼吸}}
+    </p>
+        <p class="card-text">
+      收縮：{{data.收縮}}
+    </p>
+        <p class="card-text">
+      脈搏：{{data.脈搏}}
+    </p>
+        <p class="card-text">
+      體溫：{{data.體溫}}
+    </p>
+        <p class="card-text">
+      血氧：{{data.血氧}}
+    </p>
+        <p class="card-text">
+      預警分數：{{data.預警分數}}
+    </p>
+        <p class="card-text">
+      風險：{{data.風險}}
+    </p>
+  </div>
+</div>
+</form>
+</div>
+
+
+</div>
+
+
+{% endblock content%}
