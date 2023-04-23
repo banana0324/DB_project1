@@ -188,7 +188,7 @@ class Product():
         DB.commit()
 
     def update_be_occupied(input):
-        sql = 'UPDATE BE_OCCUPIED SET NAME=:name, DEPARTMENT=:department WHERE EID=:eid'
+        sql = 'UPDATE BE_OCCUPIED SET PNO=:pno, STARTTIME=:starttime,ENDTIME=:endtime WHERE BID=:bid'
         DB.execute_input(DB.prepare(sql), input)
         DB.commit()
 
