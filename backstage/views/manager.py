@@ -371,6 +371,112 @@ def show_doctorInfo():
         '主治科別': department
     }
     return product
+# ________________________________________________________________________
+@manager.route('/be_occupiedManager', methods=['GET', 'POST'])
+@login_required
+def be_occupiedManager():
+    if request.method == 'GET':
+        if(current_user.role == 'user'):
+            flash('No permission')
+            return redirect(url_for('index'))
+        
+    if 'deletebe_occupied' in request.values:
+        pid = request.values.get('deletebe_occupied')
+        data = Product.delete_be_occupied(pid)
+        
+        if(data != None):
+            flash('failed')
+        else:
+            data = Product.get_be_occupied(pid)
+            Product.delete_be_occupied(pid)
+    
+    elif 'editbe_occupied' in request.values:
+        pid = request.values.get('editbe_occupied')
+        return redirect(url_for('manager.editbe_occupied', pid=pid))
+    
+    book_data = be_occupied()
+    return render_template('be_occupiedManager.html', book_data = book_data, user=current_user.name)
+
+def be_occupied():
+    book_row = Product.get_all_be_occupied()
+    book_data = []
+    for i in book_row:
+        book = {
+            '病床號': i[0],
+            '病歷編號': i[1],
+            '住院開始時間': i[2],
+            '住院結束時間': i[3],
+        }
+        book_data.append(book)
+    return book_data
+
+@manager.route('/addbe_occupied', methods=['GET', 'POST'])
+def addbe_occupied():
+    if request.method == 'POST':
+        data = ""
+        while(data != None):
+            number = str(random.randrange( 0, 10))
+            pid = 'P' + number
+            data = Product.get_doctor(pid)
+
+        pid = request.values.get('bid')
+        pno = request.values.get('pno')
+        starttime = request.values.get('starttime')
+        endtime = request.values.get('endtime')
+        Product.addbe_occupied(
+            {
+            'bid' : str(pid),
+            'pno' : str(pno),
+            'starttime' :str(starttime),
+            'endtime' :str(endtime)
+            }
+        )
+
+        return redirect(url_for('manager.be_occupiedManager'))
+
+    return render_template('be_occupiedManager.html')
+
+@manager.route('/editbe_occupied', methods=['GET', 'POST'])
+@login_required
+def editbe_occupied():
+    if request.method == 'GET':
+        if(current_user.role == 'user'):
+            flash('No permission')
+            return redirect(url_for('bookstore'))
+
+    if request.method == 'POST':
+        Product.update_be_occupied(
+            {
+            'bid' : request.values.get('bid'),
+            'pno' : request.values.get('pno'),
+            'starttime' : request.values.get('starttime'),
+            'endtime' : request.values.get('endtime')
+            }
+        )
+        
+        return redirect(url_for('manager.be_occupiedManager'))
+
+    else:
+        product = show_be_occupiedInfo()
+        return render_template('editbe_occupied.html', data=product)
+
+
+def show_be_occupiedInfo():
+    bid = request.args['pid']
+    data = Product.get_be_occupied(bid)
+
+    bid = data[0]
+    pno = data[1]
+    starttime = data[2]
+    endtime = data[3]
+
+    product = {
+        '病床號': bid,
+        '病歷編號': pno,
+        '住院開始時間': starttime,
+        '住院結束時間': endtime
+    }
+    return product
 
 
 @manager.route('/orderManager', methods=['GET', 'POST'])

@@ -93,6 +93,10 @@ class Product():
         sql ='SELECT * FROM DOCTOR WHERE EID = :id'
         return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': eid}))
     
+    def get_be_occupied(eid):
+        sql ='SELECT * FROM BE_OCCUPIED WHERE BID = :id'
+        return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': eid}))
+    
     def get_vital_sign(pid):
         sql ='SELECT * FROM VITAL_SIGN WHERE PNO = :id'
         return DB.fetchone(DB.execute_input(DB.prepare(sql), {'id': pid}))
@@ -112,8 +116,11 @@ class Product():
         return DB.fetchall(DB.execute( DB.connect(), sql))
     
     def get_all_doctor():
-        # sql = 'SELECT * FROM PRODUCT'
         sql = 'SELECT * FROM DOCTOR'
+        return DB.fetchall(DB.execute( DB.connect(), sql))
+    
+    def get_all_be_occupied():
+        sql = 'SELECT * FROM BE_OCCUPIED'
         return DB.fetchall(DB.execute( DB.connect(), sql))
     
     def get_name(pid):
@@ -133,8 +140,12 @@ class Product():
         DB.commit()
 
     def add_doctor(input):
-        print(str(input))
         sql = 'INSERT INTO DOCTOR VALUES (:eid, :name, :department)'
+        DB.execute_input(DB.prepare(sql), input)
+        DB.commit()
+
+    def addbe_occupied(input):
+        sql = 'INSERT INTO BE_OCCUPIED VALUES (:bid, :pno, :starttime, :endtime)'
         DB.execute_input(DB.prepare(sql), input)
         DB.commit()
 
@@ -154,6 +165,11 @@ class Product():
         DB.execute_input(DB.prepare(sql), {'id': pid})
         DB.commit()
 
+    def delete_be_occupied(pid):
+        sql = 'DELETE FROM BE_OCCUPIED WHERE EID = :id '
+        DB.execute_input(DB.prepare(sql), {'id': pid})
+        DB.commit()
+
     def update_product(input):
         # sql = 'UPDATE PRODUCT SET PNAME=:name, PRICE=:price, CATEGORY=:category, PDESC=:description WHERE PID=:pid'
         sql = 'UPDATE PATIENT SET NAME=:name, SEX=:category, BIRTH=:price, DIAGNOSIS=:description WHERE PNO=:pid'
@@ -167,8 +183,12 @@ class Product():
         DB.commit()
 
     def update_doctor(input):
-        # sql = 'UPDATE PRODUCT SET PNAME=:name, PRICE=:price, CATEGORY=:category, PDESC=:description WHERE PID=:pid'
         sql = 'UPDATE DOCTOR SET NAME=:name, DEPARTMENT=:department WHERE EID=:eid'
+        DB.execute_input(DB.prepare(sql), input)
+        DB.commit()
+
+    def update_be_occupied(input):
+        sql = 'UPDATE BE_OCCUPIED SET NAME=:name, DEPARTMENT=:department WHERE EID=:eid'
         DB.execute_input(DB.prepare(sql), input)
         DB.commit()
 

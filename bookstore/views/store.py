@@ -84,7 +84,6 @@ def bookstore():
         doctorDept = dataDoc[2]
 
         dataVitalSign = Product.get_vital_sign(pid)
-
         seqtime = dataVitalSign[0]
         rr = dataVitalSign[1]
         bp = dataVitalSign[2]
@@ -212,7 +211,7 @@ def undergoes():
         search = request.values.get('keyword')
         keyword = search
         
-        cursor.prepare('SELECT * FROM UNDERGOES WHERE NAME LIKE :search')
+        cursor.prepare('SELECT * FROM UNDERGOES WHERE SID LIKE :search')
         cursor.execute(None, {'search': '%' + keyword + '%'})
         book_row = cursor.fetchall()
         surgery_data = []
@@ -287,7 +286,7 @@ def undergoes():
         single = 1
         search = request.values.get('keyword')
         keyword = search
-        cursor.prepare('SELECT * FROM UNDERGOES WHERE NAME LIKE :search')
+        cursor.prepare('SELECT * FROM UNDERGOES WHERE SID LIKE :search')
         cursor.execute(None, {'search': '%' + keyword + '%'})
         book_row = cursor.fetchall()
         surgery_data = []

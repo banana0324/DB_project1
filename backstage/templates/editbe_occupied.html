@@ -1,0 +1,42 @@
+{% extends "backstage.html" %}
+{% block head %}
+{{ super() }}
+
+{% endblock head %}
+
+{% block title %}醫師資訊維護{% endblock title%}
+
+{% block content%}
+
+
+<br/>
+<div class="container-xl">
+  <br/>
+  <form method="post" enctype=multipart/form-data action={{ url_for('manager.editbe_occupied') }}>
+    <table class="table table-bordered">
+      <tr>
+        <th>病床號</th>
+        <td><input class="form-control" type="text" value="{{ data.病床號 }}" name="bid" readonly class="id_input"></td>
+      </tr>
+      <tr>
+        <th>病歷編號</th>
+        <td><input class="form-control" type="text" value="{{ data.病歷編號 }}" name="pno" readonly class="id_input"></td>
+      </tr>
+      <tr>
+        <th>住院開始時間</th>
+        <td><input class="form-control" type="text" value="{{ data.住院開始時間 }}" name="starttime" required></td>
+      </tr>
+      <tr>
+        <th>住院結束時間</th>
+        <td><input class="form-control" type="text" value="{{ data.住院結束時間 }}" name="endtime" required></td>
+      </tr>
+    </table>
+    <center>
+      <div class="option">
+        <button class="btn btn-outline-success" type="submit">確定修改</button> 
+        <a href="{{ url_for('manager.be_occupiedManager') }}"><button class="btn btn-outline-danger">回病床資訊維護</button></a>
+      </div>
+    </center>
+  </form>
+</div>
+{% endblock content%}
